@@ -1,0 +1,20 @@
+# Inferring two Rates under a bounded condition
+model{
+  # duration is within [0 5], the looking time is the single trial duration times a proportion
+  for (i in 1:n){
+    dur[i] ~ dbeta(alpha1,beta1)
+    x[i] ~ dbeta(alpha2, beta2)
+}
+  # Prior
+  phi1 ~ dgamma(.1,.1)
+  a1 ~ dnorm(0,.001)
+  phi2 ~ dgamma(.1,.1)
+  a2 ~ dnorm(0,.001)
+  # Reparameterization
+  alpha1 <- mu1 * phi1
+  beta1  <- (1-mu1) * phi1
+  logit(mu1) <- a1
+  alpha2 <- mu2 * phi2
+  beta2  <- (1-mu2) * phi2
+  logit(mu2) <- a2
+}

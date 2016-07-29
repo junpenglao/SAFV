@@ -1,0 +1,20 @@
+# Inferring two Rates under a bounded condition
+# 
+# let $\xi^\star_j \sim \mbox{Gamma}(\alpha_j, 1)$. Then it can be shown that 
+# $$
+# \xi \equiv \left(\frac{\xi^\star_1}{\sum_j \xi^\star_j}, \ldots, 
+# \frac{\xi^\star_J}{\sum_j \xi^\star_j}\right) \sim \mathcal Dirichlet(\alpha_1, \ldots, \alpha_J).
+# $$
+model{
+  # duration is within [0 5], the looking time is the single trial duration times a proportion
+for(j in 1:n) {
+  x[j] ~ dgamma(alpha1, 1)
+  y[j] ~ dgamma(alpha2, 1)
+  z[j] ~ dgamma(alpha3, 1)
+  }
+  # Prior
+  alpha1 ~ dunif(0,5)
+  alpha2 ~ dunif(0,5)
+  # alpha3 <- 5 - (alpha1 + alpha2)
+  alpha3 ~ dunif(0,5)
+}
