@@ -1,23 +1,23 @@
 %% fixation preferences
-PredM = dataset('File','TestPhase.csv','Delimiter',',');
-PredM.Emo2=nominal(PredM.Emo2);
-PredM.Famil=nominal(PredM.Famil);
-PredM.weight=PredM.TotlDur./5;
-PredM.fixDurPor=PredM.fixDur./PredM.TotlDur;
-PredM.Famil=nominal(PredM.Emo==PredM.Emo2,{'novel','famil'});
-% export(PredM,'File',['TestPhase.csv'],'Delimiter',',')
-dstmp=PredM(PredM.Famil=='famil',:);
-dstmp.FA=dstmp.fixDur;
-dstmp.NW=PredM.fixDur(PredM.Famil=='novel');
-dstmp.Pref=dstmp.FA-dstmp.NW;
-lme4=fitlme(dstmp,'Pref ~ Fctype * Grp * Emo + (TotlDur|Sbj)','Dummyvarcoding','effect');
+PredM           = dataset('File','TestPhase.csv','Delimiter',',');
+PredM.Emo2      = nominal(PredM.Emo2);
+PredM.Famil     = nominal(PredM.Famil);
+PredM.weight    = PredM.TotlDur./5;
+PredM.fixDurPor = PredM.fixDur./PredM.TotlDur;
+PredM.Famil     = nominal(PredM.Emo==PredM.Emo2,{'novel','famil'});
+
+dstmp           = PredM(PredM.Famil=='famil',:);
+dstmp.FA        = dstmp.fixDur;
+dstmp.NW        = PredM.fixDur(PredM.Famil=='novel');
+dstmp.Pref      = dstmp.FA-dstmp.NW;
+lme4 = fitlme(dstmp,'Pref ~ Fctype * Grp * Emo + (TotlDur|Sbj)','Dummyvarcoding','effect');
 anova(lme4)
 %% smooth 2D historgram (Plotly)
-lim1=-.5;
-lim2=5;
-nbin=25;
-intervel=linspace(lim1,lim2,nbin);
-bsize=intervel(2)-intervel(1);
+lim1     = -.5;
+lim2     = 5;
+nbin     = 25;
+intervel = linspace(lim1,lim2,nbin);
+bsize    = intervel(2)-intervel(1);
 % create the "computational grid"
 n1 = 8; n2 = 8;
 x1 = linspace(-0.0001,lim2,n1+1); x2 = linspace(-0.0001,lim2,n2+1);
@@ -75,7 +75,7 @@ for ij=1:2
     sbootmat=(sum(bootmat,3));
     [s1,s2]=sort(sbootmat(:),'descend');
     ss1=cumsum(s1);
-    kss1=find(ss1>9500);
+    kss1=find(ss1>Nboot*(1-alpha));
     region95=zeros(size(sbootmat));
     region95(s2(1:(kss1(1)-1)))=s1(1:(kss1(1)-1));
     
@@ -121,6 +121,8 @@ model1=dataset(beta1,beta2,Fvaltmp,Pvaltmp,...
 %% multivariante fixation preferences
 clc
 dY=[dstmp.FA,dstmp.NW];
+dstmp.Grp=nominal(dstmp.Grp);
+dstmp.Emo=nominal(dstmp.Emo);
 
 uniGrp=unique(dstmp.Grp);
 uniEmo=unique(dstmp.Emo);
@@ -225,6 +227,9 @@ disp(dataset(meanMatCI,...
 % set(gca,'XTick',1:8,...                         % Change the axes tick marks
 %     'XTickLabel',labelstr2);
 %% barplot of each catigorical condition (with bootstrap 95%CI)
+PredM.Grp=nominal(PredM.Grp);
+PredM.Emo=nominal(PredM.Emo);
+
 uniGrp=unique(PredM.Grp);
 uniEmo=unique(PredM.Emo);
 uniFctype=unique(PredM.Fctype);
