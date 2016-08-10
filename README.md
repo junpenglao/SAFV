@@ -1,4 +1,4 @@
-# SPAFV
+# SPAFV ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 SPAFV - Surface Profile Analysis for Free Viewing eye movement experiment in 2AFC task.  
 
 Visualization and analysis of the multi-variant surface of total fixation duration or number during free viewing eye movement experiment of a 2AFC task.  
