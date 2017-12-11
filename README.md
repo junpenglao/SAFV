@@ -1,6 +1,9 @@
 # SPAFV ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 SPAFV - Surface Profile Analysis for Free Viewing eye movement experiment in 2AFC task.  
 
+Example paper:
+Geangu, E., Ichikawa, H., Lao, J., Kanazawa, S., Yamaguchi, M. K., Caldara, R., & Turati, C. (2016). Culture shapes 7-month-olds’ perceptual strategies in discriminating facial expressions of emotion. Current Biology, 26(14), R663-R664. http://www.cell.com/current-biology/abstract/S0960-9822(16)30605-4
+
 Visualization and analysis of the multi-variant surface of total fixation duration or number during free viewing eye movement experiment of a 2AFC task.  
 
 <div>
